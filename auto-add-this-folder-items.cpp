@@ -87,6 +87,7 @@ static void update_playist_items( t_size p_index, bool run_now = false )
 		if ( !playlist_manager::get()->playlist_add_items( p_index, metadb_items, metadb_selection ) ) {
 			return;
 		}
+		playback_control::get()->set_stop_after_current( true );
 	};
 
 	if ( run_now )
