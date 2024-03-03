@@ -21,7 +21,12 @@ static metadb_handle_list get_all_metadb( std::vector< std::string >& filepaths 
 	for ( auto& filepath : filepaths ) {
 		metadb_handle_ptr item_metadb_ptr = metadb::get()->handle_create( filepath.c_str(), 0 );
 
-		metadb_items.add_item( item_metadb_ptr );
+		metadb_info_container::ptr info_ptr = item_metadb_ptr->get_info_ref();
+		const file_info&           info     = info_ptr->info();
+		audio_chunk::spec_t        spec     = info.audio_chunk_spec();
+
+		if ( spec.is_valid() )
+			metadb_items.add_item( item_metadb_ptr );
 	}
 
 	return metadb_items;
